@@ -20,10 +20,10 @@ public class solution{
 		char[] b = new char[s2.length()];
 		
 		//배열에 원소를 넣기위한 과정
-		for(int i=0; i<s1.length(); i++) {
-			a[i] = s1.charAt(i);
-			b[i] = s2.charAt(i);
-		}
+		for(int i=0; i<s1.length(); i++) a[i] = s1.charAt(i);
+		
+		for(int i=0; i< s2.length(); i++) b[i] = s2.charAt(i); //여기 때문에 틀린거였음=>s1이랑s2따로 배열해줘야됐는데..
+		
 		
 		/*--------------------탐색 시작----------------------*/
 		for(int i=0; i<s1.length(); i++) {
