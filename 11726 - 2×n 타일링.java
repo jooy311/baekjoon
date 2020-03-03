@@ -2,6 +2,8 @@ import java.util.*;
 import java.util.regex.Pattern;
 import java.io.*;
 
+https://www.acmicpc.net/problem/11726
+
 public class solution {
 	static int[] nemo = new int[1001];
 
@@ -18,7 +20,7 @@ public class solution {
 		return nemo[n];
 	}
   
-  /*
+  
   /* 다이나믹프로그래밍 - bottom_up방식(작은거부터 시작) */
 	public static int ans2(int n) {
 		nemo[0] = 1;
@@ -30,7 +32,7 @@ public class solution {
 		}
 		return nemo[n];
 	}
-  */
+  
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
