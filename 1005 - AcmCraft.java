@@ -1,21 +1,7 @@
-package exam;
 import java.util.*;
 import java.io.*;
 
-/*
-class Pair {
-   // 건설 시간과 그 건물을 짝꿍으로 만드는거임
-   public int gunmul;
-   public int sigan;
-
-   Pair(int gunmul, int sigan) {
-      this.gunmul = gunmul;
-      this.sigan = sigan;
-   }
-}
-*/
-public class ACM_me {
-
+public class Main {
 	//전역 변수를 사용하기 위해....
 	static int n; // 노드 갯수
 	static int k; // 간선 갯수
