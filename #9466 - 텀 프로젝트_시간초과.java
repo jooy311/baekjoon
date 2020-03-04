@@ -2,16 +2,20 @@ import java.util.*;
 import java.util.regex.Pattern;
 import java.io.*;
 
-//https://www.acmicpc.net/problem/9466
+/*
+ * https://www.acmicpc.net/problem/9466
+ */
 
 public class Main {
-	static Stack<Integer> stack = new Stack<>();// 팀결성된 친구들 넣는 스택
+	static Stack<Integer> stack;// 팀결성된 친구들 넣는 스택
+	static boolean[] check;
+	static Stack<Integer>[] arr;
 	static int cnt;
 	static int cnt2;
 	static int cnt3;
 	static int n;
 
-	public static void team(Stack<Integer>[] arr, boolean[] check, int i, int n, Stack<Integer> s) {
+	public static void team(int i, int n, Stack<Integer> s) {
 		int temp = 0;
 		if (stack.size() >= 1)
 			check[stack.peek()] = true;
@@ -25,7 +29,7 @@ public class Main {
 			check[i] = true;
 			cnt2++;
 			temp = arr[i].peek();
-			team(arr, check, temp, n, s);
+			team(temp, n, s);
 		}
 		if (check[i] == true && s.peek() == arr[i].peek()) {// 팀이 결성된 경우->근데 팀인애를 어케 아냐
 			cnt3 = cnt2;
@@ -38,14 +42,14 @@ public class Main {
 
 		st = new StringTokenizer(br.readLine());
 		int t = Integer.parseInt(st.nextToken());// 테스트 케이스
-		Stack<Integer>[] arr;
-
+		
 		while (t-- > 0) {
+			stack = new Stack<>();
+			cnt = 0; cnt2 = 0; cnt3 = 0;
 			st = new StringTokenizer(br.readLine());
 			n = Integer.parseInt(st.nextToken());// 학생수
-			boolean[] check; // = new boolean[n + 1];;
+			
 			Stack<Integer> s = new Stack<>();
-
 			arr = (Stack<Integer>[]) new Stack[n + 1];
 			for (int i = 1; i <= n; i++) {
 				arr[i] = new Stack<>();
@@ -53,17 +57,16 @@ public class Main {
 
 			st = new StringTokenizer(br.readLine());
 			for (int i = 1; i <= n; i++) {
-				arr[i].add(Integer.parseInt(st.nextToken()));
+				arr[i].add(Integer.parseInt(st.nextToken()));// 값이 안들어가는 이유가 뭐야?
 			}
 
 			for (int i = 1; i <= n; i++) {
 				s.push(i);
 				check = new boolean[n + 1];
 				cnt2 = 0;
-				team(arr, check, i, n, s);
+				team(i, n, s);
 			}
+			System.out.println(n - (cnt + cnt3));
 		}
-		System.out.println(n - (cnt + cnt3));
-
 	}
 }
