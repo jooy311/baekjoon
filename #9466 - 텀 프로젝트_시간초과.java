@@ -15,7 +15,7 @@ public class Main {
 	static int cnt3;
 	static int n;
 
-	public static void team(int i, int n, Stack<Integer> s) {
+	public static void team(int i, int n, Stack<Integer> s) {//return 을 해줘야함(종료조건필요)
 		int temp = 0;
 		if (stack.size() >= 1)
 			check[stack.peek()] = true;
@@ -62,7 +62,7 @@ public class Main {
 
 			for (int i = 1; i <= n; i++) {
 				s.push(i);
-				check = new boolean[n + 1];
+				check = new boolean[n + 1]; //어쩌면 얘
 				cnt2 = 0;
 				team(i, n, s);
 			}
