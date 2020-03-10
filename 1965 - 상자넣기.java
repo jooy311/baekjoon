@@ -4,6 +4,7 @@ import java.util.*;
 import java.io.*;
 
 /*
+ * 어떻게 상자를 골라야 최대로 박스를 많이 넣을 수 있느냐가 문제임
  * https://www.acmicpc.net/problem/1965
  */
 
@@ -25,10 +26,9 @@ public class solution2 {
 		
 		st = new StringTokenizer(br.readLine());
 		for(int i=0; i<n; i++) {
-			//box.add(Integer.parseInt(st.nextToken()));//박스 값을 세팅
 			box[i] = Integer.parseInt(st.nextToken());
 		}
-		//Arrays.sort(box); //상자를 재배열하면 안된대.
+		//Arrays.sort(box); //상자를 재배열하면 안됨. 주어진 순서대로 박스를 고정해둬야함
 		
 		int cnt = 0;
 		for(int i=0; i<n; i++) {
@@ -37,8 +37,7 @@ public class solution2 {
 				  dp[i] = dp[j] + 1;
 				}
 			}
-			if(cnt < dp[i]) 
-        cnt = dp[i];
+			if(cnt < dp[i])  cnt = dp[i];
 		}
 		System.out.println(cnt);
 	}
