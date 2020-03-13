@@ -34,7 +34,7 @@ public class solution2 {
 		for(int i=0; i<n; i++) {
 			for(int j=0; j<i; j++) {//j가 i만큼만 돌아야됨 -> 즉 지금 차례 상자 바로 전까지만 서로 비교를 하도록.
 			if(box[i] > box[j] && dp[i] < dp[j] + 1) {
-				  dp[i] = dp[j] + 1;
+				  dp[i] = dp[j] + 1; //자기자신을 더하기 때문에 +1
 				}
 			}
 			if(cnt < dp[i])  cnt = dp[i];
