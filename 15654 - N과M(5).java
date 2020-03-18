@@ -2,13 +2,14 @@ import java.util.*;
 import java.io.*;
 
 /*
- * https://www.acmicpc.net/problem/15654
+ * https://www.acmicpc.net/problem/9466
  */
 
 public class Main {
 
 	public static void go(int start, int n, int m, int[] arr, boolean[] check, int[] a) {
 		if (start == m) {//두개 골라졌다면
+			//if (check[start])
 			for(int i=0; i<m; i++)
 				System.out.print(arr[i]+" ");
 			System.out.println("");
@@ -33,19 +34,15 @@ public class Main {
 		int n = Integer.parseInt(st.nextToken());// n개의 수
 		int m = Integer.parseInt(st.nextToken());// m개
 
-		int[] arr = new int[n];
+		int[] arr = new int[n];//얘는 그냥 선택한 숫자를 m개담는 배열
 		boolean[] check = new boolean[n];
 		int[] a =  new int[n];
 
 		st = new StringTokenizer(br.readLine());
 		for (int i = 0; i < n; i++) {
-			arr[i] = Integer.parseInt(st.nextToken());
-			a[i] = arr[i];			
+			a[i] = Integer.parseInt(st.nextToken());
 		}
-
-		Arrays.sort(arr);// 오름 차순
 		Arrays.sort(a);
 		go(0, n, m, arr, check,a);
-
 	}
 }
