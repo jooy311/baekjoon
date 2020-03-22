@@ -31,6 +31,7 @@ public class Main {
 			int[] arr = new int[n];//출력할 k번째 수열을 담기 위한 배열
 			for(int i=0; i<n; i++) {
 				for(int j=1; j<=n; j++) {
+					
 					if(check[j] == true) continue; //j가 수열에 들어있다면 pass
 					//j가 수열에 들어있지 않는다면
 					if(f[n-i-1] < k) {//만약 3번째 수열을 구한다하면 f[]
