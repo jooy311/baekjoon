@@ -60,6 +60,7 @@ public class solution2 {
 					}
 					if (str[i][j].equals("*")) {
 						fire.add(new Pair(i, j));
+						visited[i][j] = true;
 					}
 				}
 			}
