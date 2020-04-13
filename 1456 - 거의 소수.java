@@ -29,7 +29,7 @@ class solution2 {
 				if (arr[i] * num >= start) {//num을 곱한게 start보다 크다면
 					cnt++;
 				}
-				num *= arr[i];
+				num *= arr[i];//만약에 소수2면-(범위에해당이 된다면) 2제곱-2의3승-2의4승...해당하는거 다 확인하기위해서
 			}
 		}
 		System.out.println(cnt);
