@@ -15,7 +15,7 @@ class Main
 		
 		int[] indegree = new int[n+1];//차수 설정을 위한 배열
 		ArrayList<Integer>[] arr = (ArrayList<Integer>[]) new ArrayList[n+1];//간선을 만들기 위한 배열
-		//ArrayList<Integer> seq = new ArrayList<Integer>();
+		ArrayList<Integer> seq = new ArrayList<Integer>();
 		
 		for(int i=1; i<n+1; i++) {
 			arr[i] = new ArrayList<Integer>();
@@ -31,52 +31,37 @@ class Main
 				if(q.size()==1) break;
 				int cur_singer = q.poll();
 				int next_singer = q.peek();
-				//System.out.println(cur_singer + ", " + next_singer);
 				arr[cur_singer].add(next_singer);
 				indegree[next_singer]++;//차수 설정(화살표 받은애)
 			}
 		}
 		
-		//while(seq.size() <= n) {
-		
-		String str = seqq(n,indegree,arr);
-		if(str.equals("0"))
-			System.out.println(str);
-		else {
-			String[] s = str.split("");
-			for(int i=0; i<s.length; i++)
-				System.out.print(s[i] + "\n");
-		}
+		seqq(n,indegree,arr);
 	}
 	
-	public static String seqq(int n, int[] indegree, ArrayList<Integer>[] arr) {
-		String str ="";
+	public static void seqq(int n, int[] indegree, ArrayList<Integer>[] arr) {
 		Queue<Integer> qq = new LinkedList<Integer>();
 		for(int i=1; i<=n; i++) {
-			if(indegree[i] == 0) {
+			if(indegree[i] == 0) {//피디가 골라오지 않은 가수들도 어쨌든 차수가 0이기 때문에 큐에 들어가게 된다.
 				qq.add(i);//0인애들을 일단 다 큐에 넣는다
 			}
 		}
 		
 		while(!qq.isEmpty()) {//q가 빌때가지
 			int cur = qq.poll(); //큐에있는 첫번째 차수가0인애
-			//System.out.println(cur);
-			//seq.add(cur);
-			str = str + cur;
+			seq.add(cur);
 			for(int i : arr[cur]) {
-				indegree[i]--;
+				indegree[i]--;//차수가 0인 가수와 연결되어있는 가수 다 차수 감소시킴
 				
-				if(indegree[i] == 0) 
-					qq.add(i);				
+				if(indegree[i] == 0) //끊어내고 또 차수 0인애들 있으면
+					qq.add(i);//큐에 넣는다
 			}
-			
-		}
-		
-		for(int i=0; i<=n; i++) {
-			if(indegree[i] != 0) {
-				str = "0";
+		}//큐가 빌때까지 반복
+		if(seq.size() != n) System.out.println("0");//seq의 사이즈가 가수 명수보다 작으면 0출력(안되는경우는 어찌됐든 qq에 들어가지 못하므로
+		else{//그게아니면 순서대로 출력~
+			for(int i=0; i<seq.size(); i++){
+				System.out.println(seq.get(i));
 			}
 		}
-		return str;
 	}
 }
