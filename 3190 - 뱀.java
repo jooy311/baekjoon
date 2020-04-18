@@ -1,5 +1,4 @@
-package exam;
-
+/* package whatever; // don't place package name! */
 import java.util.*;
 import java.lang.*;
 import java.io.*;
@@ -28,14 +27,14 @@ class tk{
 	}
 }
 
-class solution2 {
+class Main {
 	static int n;
-	static int len_snake;// 뱀의 길이
-	static int time = 0;
+	//static int len_snake;// 뱀의 길이
+	static int n_time = 0;
 	static int[][] map;
 	static int[] dx = { 0, 0, -1, 1 };
 	static int[] dy = { -1, 1, 0, 0 };// 좌우상하
-	static int[][] dist;
+	//static int[][] dist;
 	static boolean[][] check;// 뱀길이를 t로 만들어서 게임이 끝나는지 아닌지 체크
 	static ArrayList<tk> change_dir;
 
@@ -52,13 +51,14 @@ class solution2 {
 		change_dir = new ArrayList<tk>();
 
 		map = new int[n + 1][n + 1];// 1행1열부터 시작하도록 만들자
-		dist = new int[n + 1][n + 1];
+		//dist = new int[n + 1][n + 1];
 
 		// 사과위치 받기
 		while (k-- > 0) {
 			st = new StringTokenizer(br.readLine());
 			int x = Integer.parseInt(st.nextToken());
 			int y = Integer.parseInt(st.nextToken());
+			// apple_pos.add(new Pair(x, y));// 사과의 개수만큼 위치를 받는다
 			map[x][y] = 1;// 사과가 있는 곳은 1을 해놔서 1씩 뱀길이 증가할 수있도록
 		}
 		// 뱀의 방향 변환 횟수받기
@@ -67,7 +67,7 @@ class solution2 {
 		while (change-- > 0) {
 			st = new StringTokenizer(br.readLine());
 			int time = Integer.parseInt(st.nextToken());
-			String dirr = st.nextToken(); int direction = 0;			
+			String dirr = st.nextToken(); int direction = 0;
 			change_dir.add(new tk(time, dirr));
 		}
 
@@ -84,6 +84,7 @@ class solution2 {
 		check = new boolean[n + 1][n + 1];
 		q.add(new Pair(a, b, time, len));// 뱀의 시작 위치를 받아 큐에 넣는다, 뱀이 처음시작 할때 시간도 0
 
+		// check[a][b] = true;
 		while (!q.isEmpty()) {
 			Pair p = q.poll();
 			int x = p.x;
@@ -96,10 +97,10 @@ class solution2 {
 				Pair pp = qq.poll();
 				check[pp.x][pp.y] = false;// 이건 뱀의 길이가 1일때 -> 2이상일때는? -> 뱀이 전에 위치했던 좌표를 알아야함
 			}
-			System.out.println("현재시간 " + cur_time);
-			for(int k=0; k < change_dir.size(); k++) {
-				if(cur_time  == change_dir.get(k).time) {
-					if(change_dir.get(k).k.equals("D")) {
+			//System.out.println("현재시간 " + cur_time);
+			for(int j=0; j < change_dir.size(); j++) {
+				if(cur_time  == change_dir.get(j).time) {
+					if(change_dir.get(j).k.equals("D")) {
 						if(dir == 0) 
 							dir = 2;
 						else if(dir == 1)
@@ -120,13 +121,13 @@ class solution2 {
 					}
 				}
 			}
-		//	System.out.println("방향 " + dir);
+			//System.out.println("방향 " + dir);
 			int nx = x + dx[dir];
 			int ny = y + dy[dir];
-		//	System.out.println("다음 진행방향 "+nx +", " + ny);
-			int n_time = cur_time + 1;// 다음방향으로 옮기면 초가 1초늘어남
+			//System.out.println("다음 진행방향 "+nx +", " + ny);
+			n_time = cur_time + 1;// 다음방향으로 옮기면 초가 1초늘어남
 			int n_len = cur_len;
-			if (nx > 0 && ny > 0 && nx < n && ny < n) {
+			if (nx > 0 && ny > 0 && nx <= n && ny <= n) {
 				if (check[nx][ny] == false) {// 뱀이 차지하고 있는 칸이 아니라면
 					if (map[nx][ny] == 1) {
 						n_len = cur_len + 1;
@@ -137,12 +138,12 @@ class solution2 {
 					return n_time;
 				}
 
-			}else if(nx == n+1 || ny == n+1 || nx == 1 || ny ==1) {
-				System.out.println("여기서 탈출");
+			}else if(nx == n+1 || ny == n+1 || nx == 0 || ny == 0) {
+				//System.out.println("여기서 탈출");
 				return n_time;
 			}
 		}
-		return time;
+		return n_time;
 	}
 
 }
