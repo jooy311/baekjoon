@@ -1,0 +1,96 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+//1.각 지역의 인구수는 어떻게 저장해야하는가
+//2.주어지는 간선정보는 어떻게 저장해야 하는가?
+//1..선거구로 나누는 방법으로 어떤 알고리즘을 사용해야하나? (탐색기법은 맞는데 어떻게?)
+//빨간색을 먼저 정하고,
+//파란색이 연결이 되는지 확인해야하나?
+
+class solution2 {
+   /*
+    * static class Pair{ int x, people;//각 지역번호와 각 지역의 인구수 public Pair(int x, int
+    * people) { this.x = x; this.people = people; } }
+    */
+   static int n;// 구역의 개수
+   static int[] people;
+   static int[][] nearby;
+   static boolean[][] check;
+   static int tmpBlue;
+   static int tmpRed;
+   static int min = 999999;
+   static int[] dx = {0,0,-1,1};
+   static int[] dy = {-1,1,0,0};
+
+   public static void main(String[] args) throws java.lang.Exception {
+      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+      StringTokenizer st;
+      st = new StringTokenizer(br.readLine());
+      n = Integer.parseInt(st.nextToken()); 
+      //인구수 저장
+      people = new int[n+1]; 
+      st = new StringTokenizer(br.readLine());
+      for(int i=1; i<=n; i++) {
+         people[i] = Integer.parseInt(st.nextToken());
+      }
+      
+      //간선 저장
+      nearby = new int[n+1][n+1];
+      st = new StringTokenizer(br.readLine());
+      int near = Integer.parseInt(st.nextToken());
+      for(int i=1; i<=n; i++) {
+         for(int j=1; j<=near; j++) {
+            int tmp = Integer.parseInt(st.nextToken());
+            nearby[i][tmp] = 1; //간선 설정
+         }
+      }  
+      
+      check = new boolean[n+1][n+1];
+      for(int i=1; i<=n; i++) {
+         for(int j=1; j<=n; j++) {
+          if(check[i][j] == true) {
+             //인구수를 저장
+          }else if(check[i][j] == false) {
+             //블루인 인구수를 저장
+          }
+         }
+      }
+      //인구 차이가 최소이려면 
+      if(min < Math.abs(tmpRed - tmpBlue))
+         min = Math.abs(tmpRed - tmpBlue);
+      System.out.println(min); //인구의 차이를 추렭
+   }
+
+   // 1번선거구부터 시작하면 되나..?
+   public static void check_red(int a, int b, int depth) {
+      //종료조건
+      if(depth >= 1 ) {
+         if(check_blue() == true) {
+            //인구수 차이를 출력
+         }else {
+            System.out.println(-1);//안되는 경우에는 -1 출력
+         }
+         return;
+      }
+      for(int k=0; k<4; k++) {
+         int nx = a + dx[k];
+         int ny = b + dy[k];//y를 받는게 맞는건가?
+         if(nx >=1 && ny >= 1 && nx <= n && ny <=n) {
+            if(nearby[nx][ny] == 1 && check[nx][ny] == false) {
+               //인접한 지역(간선)이고, 들린적없는 지역일때
+               check[nx][ny] = true;
+               tmp = tmp + //인구수 저장
+               check_red(nx, ny, depth +1);
+               check[nx][ny] = false;//백트래킹
+            }
+         }
+      }
+   }
+
+   public static boolean check_blue() {
+      
+      
+      //연결이 되어있으면 true
+      return true;
+   }
+}
