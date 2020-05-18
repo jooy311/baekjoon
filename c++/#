@@ -1,0 +1,76 @@
+#include <iostream>
+#include <cstring>
+#include <queue>
+#include <algorithm>
+
+using namespace std;
+struct Pos {
+    int x;
+    int y;
+    int val;
+};
+int n, m;
+int dx[] = { 0,1,1 };//오른쪽으로 한칸, 아래로 한칸, 대각선으로 밖에 못감
+int dy[] = { 1,0,1 };
+int sum = 0;
+
+void bfs(queue<Pos> q, int** arr, int** dist) {
+    while (!q.empty()) {
+        int x = q.front().x;
+        int y = q.front().y;
+        int v = q.front().val;
+        //cout << x << " " << y << " " <<  v << " value" << endl;
+        if (x == n - 1 && y == m - 1) {
+            //cout << v << "zz" << endl;
+            if (sum < v) sum = v;
+        }
+        dist[x][y] = 1;
+        q.pop();
+        int tmp = 0;
+        for (int i = 0; i < 3; i++) {
+            int nx = x + dx[i];
+            int ny = y + dy[i];
+            if (nx >= 0 && ny >= 0 && nx < n && ny < m) {
+                int nv = v + arr[nx][ny];
+                 if (dist[nx][ny] == 0) { //들렸던 곳이 아니면
+                     dist[nx][ny] = 1;
+                     q.push({ nx,ny,nv });
+                 }
+                 else if (v < nv) {//들렸는데 이전에 갖고있던 값보다 작다면
+                     v = nv;
+                     q.push({ nx,ny,nv });
+                 }
+            }
+        }
+    }
+}
+
+int main() {
+
+    cin >> n >> m;
+    int** arr = new int* [m];
+    memset(arr, 0, sizeof(m));
+
+    int** dist = new int* [m];
+    memset(dist, 0, sizeof(m));
+
+    for (int i = 0; i < n; i++) {
+        arr[i] = new int[n];
+        dist[i] = new int[n];
+        memset(arr[i], 0, sizeof(int) * n);
+        memset(dist[i], 0, sizeof(int) * n);
+    }
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++)
+            cin >> arr[i][j];
+    }
+    queue<Pos> q;//준규가 움직이는 위치를 담는 큐
+    Pos pos = { 0,0,arr[0][0] };
+    q.push(pos);
+
+    dist[0][0] = 1;
+    bfs(q, arr, dist);
+    cout << sum;
+    return 0;
+}
