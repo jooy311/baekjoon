@@ -1,72 +1,47 @@
 #include <iostream>
 #include <cstring>
-#include <vector>
-#include <algorithm>
 using namespace std;
 
-int n, m, s;
-int result = 0;
-
-void dp(int* ans, vector<vector<int>> memo) {
-
-    for (int i = 1; i < n; i++) {
-        vector<int> vv;
-        for (int j = 0; j < memo[i - 1].size(); j++) {
-            int tmp = memo[i - 1][j] + ans[i];
-            int tmp2 = memo[i - 1][j] - ans[i];
-            if (tmp <= m && tmp >= 0) {
-                vv.push_back(tmp);
-                //cout << tmp << " ";
-            }
-            if (tmp2 <= m && tmp2 >= 0) {
-                vv.push_back(tmp2);
-                //cout << tmp2 << " ";
-            }
-
-        }
-        if (vv.size() == 0) {
-            result = -1;
-            
-        }
-        memo.push_back(vv);
-        vv.clear();
-    }
-    if (result != -1) {
-        for (int i = 0; i < memo.back().size(); i++) {
-            vector<int> vs = memo.back();
-            if (result < vs[i]) result = vs[i];
-        }
-    }
-
-    cout << result;
-    return;
-}
-
 int main() {
-    cin >> n >> s >> m;
+	int N, S, M;
+	cin >> N >> S >> M;
+	
+	int V[N];
+	bool arr[N][M+1]; // 해당 곡에서 가능한 볼륨의 크기를 true로 담을 배열
+	for(int i = 0; i < N; i++){
+		cin >> V[i];
+		memset(arr[i],false,M+1);
+	}
+	
+  // 초기화 (시작볼륨과 첫번째 곡이 V[0]만큼 차이나도록)
+	if(S+V[0] <= M){
+		arr[0][S+V[0]] = true;
+	}
+	if(S-V[0] >= 0){
+		arr[0][S-V[0]] = true;
+	}
+	
+	for(int i = 0; i < N-1; i++){
+			for(int j = 0; j <= M; j++){
+				if(arr[i][j] == true){ // 현재 볼륨으로 곡 연주 가능하다면 다음 곡 볼륨 계산
+					if(j+V[i+1] <= M){ // 다음 곡이 더 크고 범위 내에 존재하는 경우
+						arr[i+1][j+V[i+1]] = true;
+					}
+					if(j-V[i+1] >= 0){ // 다음 곡이 더 작고 범위 내에 존재하는 경우
+						arr[i+1][j-V[i+1]] = true;
+					}
+				}
+			}
+	}
+	
+	for(int i = M; i >= 0; i--){ // 큰 볼륨부터 확인(가장 먼저 만나는 true값의 열이 최대 볼륨이 됨)
+		if(arr[N-1][i] == true){
+			cout << i; // 최대 볼륨 출력 후
+			return 0; // 종료
+		}
+	}
+	
+	cout << -1; // 마지막 곡 연구 불가능하면 -1 출력
 
-    int* ans = new int[n];
-    memset(ans, 0, sizeof(n));
-
-
-    vector<vector<int>> memo;
-
-    for (int i = 0; i < n; i++) {
-        cin >> ans[i];
-    }
-    //벡터의 0번째 인덱스에는 처음 볼륨의 +/-값을 셋팅
-    vector<int> v;
-    if (s - ans[0] <= m && s - ans[0] >= 0) {
-        v.push_back(s - ans[0]);
-    }
-    if (s + ans[0] <= m && s + ans[0] >= 0) {
-        v.push_back(s + ans[0]);
-    }
-    if (v.size() == 0) result = -1;
-    memo.push_back(v);
-    v.clear();
-
-    dp(ans, memo);
-
-    return 0;
+	return 0;
 }
