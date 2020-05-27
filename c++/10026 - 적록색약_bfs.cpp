@@ -85,13 +85,8 @@ int main() {
 				}
 			}
 		}
+		cout << area_cnt - 1 << " "; //마지막에 나올때 ++해서 나오기때문에 -1 해준다.
+					    //아오...dp마지막줄에서 최대값을 구하면 될줄 알았는데,,생각해보니까 중간줄이 더 클수도있음..
 	}
-	int max = 0; int max2 = 0;
-	for (int i = 0; i < n; i++) {
-		if (max < dp[0][n - 1][i]) max = dp[0][n - 1][i];
-		if (max2 < dp[1][n - 1][i]) max2 = dp[1][n - 1][i];
-	}
-	cout << max << " " << max2;
-	
 	return 0;
 }
