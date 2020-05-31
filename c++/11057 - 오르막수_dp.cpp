@@ -16,6 +16,7 @@ int main() {
 	}
 
 	for (int i = 0; i <= 9; i++) {
+		dp[0][i] = 1;
 		dp[1][i] = 1;
 	}
 
