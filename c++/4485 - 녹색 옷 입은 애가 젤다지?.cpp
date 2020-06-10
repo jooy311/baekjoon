@@ -9,14 +9,14 @@ struct Pos {
     int x;
     int y;
 };
+
 int n;
 int dx[] = { -1,1,0,0 };
 int dy[] = { 0,0,-1,1 };
-int sum = 0;
 
 void bfs( int** arr, int** dist, bool** check) {
-    queue<Pos> q;//준규가 움직이는 위치를 담는 큐
-    Pos pos = { 0,0 }; //준규 시작 위치
+    queue<Pos> q;
+    Pos pos = { 0,0 }; 
     q.push(pos);
 
     dist[0][0] = arr[0][0];
@@ -35,13 +35,11 @@ void bfs( int** arr, int** dist, bool** check) {
                 if(check[nx][ny] == false){
                 	check[nx][ny] = true;
                 	dist[nx][ny] = dist[x][y] + arr[nx][ny];
-                    q.push({ nx,ny });
+                    	q.push({ nx,ny });
                 }
                 else if (dist[x][y] + arr[nx][ny] < dist[nx][ny]) {//들렸는데 이전에 갖고있던 값보다 작다면
                     dist[nx][ny] = dist[x][y] + arr[nx][ny];
                     dist[nx][ny] = min(dist[nx][ny], dist[x][y] + arr[nx][ny]);
-                    //cout << nx << " " << ny << " " << dist[nx][ny] << endl;
-                    //check[nx][ny] = true;
                     q.push({ nx,ny });
                 }
             }
@@ -50,7 +48,7 @@ void bfs( int** arr, int** dist, bool** check) {
 }
 
 int main() {
-	int cnt = 0;
+    int cnt = 0;
     while (true) {
         cin >> n;
         cnt++;
@@ -65,8 +63,6 @@ int main() {
         int** dist = new int* [n];//최대 사탕수를 누적시키는 배열
         memset(dist, 0, sizeof(n));
 
-
-
         for (int i = 0; i < n; i++) {
             arr[i] = new int[n];
             dist[i] = new int[n];
@@ -74,7 +70,6 @@ int main() {
             memset(check[i], false, sizeof(bool) * n);
             memset(arr[i], 0, sizeof(int) * n);
             memset(dist[i], 0, sizeof(int) * n);
-
         }
 
         for (int i = 0; i < n; i++) {
