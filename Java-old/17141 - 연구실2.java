@@ -1,5 +1,3 @@
-package exam;
-
 import java.util.*;
 import java.io.*;
 
